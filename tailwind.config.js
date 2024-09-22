@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       borderRadius: {
-        'custom-lg': '5.8rem'
+        'custom-lg': '3.8rem'
       }
     }
   },

@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar.vue'
 
 <template>
   <!-- Search -->
-  <div class="">
+  <div class="tw-mt-3">
     <SearchBar />
   </div>
 </template>
