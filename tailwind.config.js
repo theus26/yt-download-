@@ -4,7 +4,11 @@ export default {
   prefix: 'tw-',
   important: true,
   theme: {
-    extend: {}
+    extend: {
+      borderRadius: {
+        'custom-lg': '5.8rem'
+      }
+    }
   },
   plugins: []
 }
