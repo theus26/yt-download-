@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Modal from './Modal.vue'
 
 interface Video {
   title: string
@@ -12,6 +13,7 @@ interface Video {
   quality: any[]
 }
 
+const isOpen = ref(false)
 const videos = ref<Video[]>([
   {
     title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
@@ -93,6 +95,9 @@ const videos = ref<Video[]>([
 ])
 
 const download = (url: string) => {
+  console.log(isOpen.value)
+  isOpen.value = true
+  console.log(isOpen.value)
   console.log(`Download iniciado para o vídeo: ${url}`)
 }
 
@@ -134,5 +139,8 @@ const icon = ref(
         </div>
       </div>
     </div>
+
+    <!-- Fiel: Modal -->
+    <Modal :isOpen="isOpen" @close="isOpen = false" />
   </div>
 </template>

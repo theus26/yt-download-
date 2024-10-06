@@ -1,8 +1,4 @@
-<script lang="ts">
-export default {
-  name: 'Header'
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <header class="tw-bg-zinc-800 tw-rounded-bl-custom-lg tw-rounded-br-custom-lg tw-p-6">
