@@ -1,98 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getVideoByQuery } from '@/stores/searchVideo'
 import Modal from './Modal.vue'
 
-interface Video {
-  title: string
-  id: string
-  author: string
-  duration: string
-  thumbnail: string
-  url: string
-  isPlaylist: boolean
-  quality: any[]
+interface Props {
+  query: string
+  count?: number
 }
 
-const isOpen = ref(false)
-const videos = ref<Video[]>([
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  }
-])
+const props = withDefaults(defineProps<Props>(), {
+  count: 30
+})
+
+onMounted(() => {
+  getVideos()
+})
+
+const getVideos = () => {
+  storeSearchVideo.fetchData(props.query, props.count)
+}
 
 const download = (url: string) => {
   console.log(isOpen.value)
@@ -104,6 +30,11 @@ const download = (url: string) => {
 const icon = ref(
   '<svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.999 12c0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.524-4.477-10-10-10s-10 4.476-10 10Zm14.53-.28a.75.75 0 0 1 .073.976l-.072.084-4.001 4a.75.75 0 0 1-.977.073l-.084-.073-4-4.001a.75.75 0 0 1 .977-1.133l.084.073 2.72 2.722V7.748a.75.75 0 0 1 .649-.743l.101-.007a.75.75 0 0 1 .743.648l.007.102v6.69l2.72-2.72a.75.75 0 0 1 .977-.072l.084.072Z" fill="#fff"/></svg>'
 )
+
+const storeSearchVideo = getVideoByQuery()
+const videos = storeSearchVideo.data
+const isLoading = storeSearchVideo.loading
+const isOpen = ref(false)
 </script>
 
 <template>
@@ -140,7 +71,6 @@ const icon = ref(
       </div>
     </div>
 
-    <!-- Fiel: Modal -->
     <Modal :isOpen="isOpen" @close="isOpen = false" />
   </div>
 </template>

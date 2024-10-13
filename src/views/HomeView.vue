@@ -1,16 +1,25 @@
 <script setup lang="ts">
 import SearchBar from '@/components/SearchBar.vue'
 import Card from '@/components/Card.vue'
+import { ref } from 'vue'
+
+const searchQuery = ref('')
+
+const getQuery = (query: string) => {
+  console.log('query', query)
+  searchQuery.value = query
+  console.log('searcQuery', searchQuery.value)
+}
 </script>
 
 <template>
   <!-- Search -->
   <div class="tw-mt-3">
-    <SearchBar />
+    <SearchBar @set-query="getQuery" />
   </div>
 
   <!-- Card -->
   <div>
-    <Card />
+    <Card v-if="searchQuery" :query="searchQuery" />
   </div>
 </template>
