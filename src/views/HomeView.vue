@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import SearchBar from '@/components/SearchBar.vue'
+import Card from '@/components/Card.vue'
 </script>
 
 <template>
-  <main>
-    <h1 class="tw-text-red-600">Hello world!</h1>
-  </main>
+  <!-- Search -->
+  <div class="tw-mt-3">
+    <SearchBar />
+  </div>
+
+  <!-- Card -->
+  <div>
+    <Card />
+  </div>
 </template>
