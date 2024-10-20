@@ -9,13 +9,8 @@ export default {
         'custom-lg': '3.8rem'
       },
       animation: {
-        spinCircle: 'circleAnimation 0.8s linear infinite'
-      },
-      keyframes: {
-        circleAnimation: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' }
-        }
+        'spin-slow': 'spin 3s linear infinite',
+        'spin-fast': 'spin 0.5s linear infinite'
       }
     }
   },

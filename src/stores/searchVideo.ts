@@ -26,12 +26,12 @@ export const getVideoByQuery = defineStore('searchVideo', {
   }),
 
   actions: {
-    async fetchData(query: string, count: number) {
+    async fetchData(query: string, resultNumber: number) {
       this.loading = true
       this.error = null
       try {
         const response = await api.get<Video[]>('/youtube/searchVideo', {
-          params: { query, count }
+          params: { query, resultNumber }
         })
         this.data = response.data
       } catch (error: any) {
