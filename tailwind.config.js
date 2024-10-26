@@ -7,6 +7,10 @@ export default {
     extend: {
       borderRadius: {
         'custom-lg': '3.8rem'
+      },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+        'spin-fast': 'spin 0.5s linear infinite'
       }
     }
   },

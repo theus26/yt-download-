@@ -1,103 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { getVideoByQuery } from '@/stores/searchVideo'
 import Modal from './Modal.vue'
+import Loading from './shared/Loading.vue'
 
-interface Video {
-  title: string
-  id: string
-  author: string
-  duration: string
-  thumbnail: string
-  url: string
-  isPlaylist: boolean
-  quality: any[]
+interface Props {
+  query: string
+  count?: number
 }
 
+const props = withDefaults(defineProps<Props>(), {
+  count: 30
+})
+const storeSearchVideo = getVideoByQuery()
+
+const getVideos = () => {
+  storeSearchVideo.fetchData(props.query, props.count)
+}
+const isLoading = computed(() => {
+  return storeSearchVideo.loading
+})
+
+const videos = computed(() => {
+  return storeSearchVideo.data
+})
 const isOpen = ref(false)
-const videos = ref<Video[]>([
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  },
-  {
-    title: 'Ariana Grande - Honeymoon Avenue (Live from London)',
-    id: 'zp8-BhMCnTA',
-    author: 'Ariana Grande',
-    duration: '00:05:10',
-    thumbnail:
-      'https://i.ytimg.com/vi/zp8-BhMCnTA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDR-c-3B7MIluesXb6Y2kfmsB9Ohw',
-    url: 'https://www.youtube.com/watch?v=zp8-BhMCnTA',
-    isPlaylist: false,
-    quality: []
-  }
-])
+
+watch(() => props.query, getVideos, { immediate: true })
 
 const download = (url: string) => {
-  console.log(isOpen.value)
   isOpen.value = true
-  console.log(isOpen.value)
   console.log(`Download iniciado para o vídeo: ${url}`)
 }
 
@@ -109,6 +41,7 @@ const icon = ref(
 <template>
   <div class="tw-container tw-mx-auto">
     <div
+      v-if="!isLoading"
       class="tw-grid tw-grid-cols-5 tw-gap-y-4 tw-p-2 tw-ml-4 sm:tw-p-6 lg:tw-p-8 tw-gap-x-2 lg:tw-gap-x-4 tw--mx-1 lg:tw--mx-2"
     >
       <div
@@ -140,7 +73,9 @@ const icon = ref(
       </div>
     </div>
 
-    <!-- Fiel: Modal -->
     <Modal :isOpen="isOpen" @close="isOpen = false" />
+    <div class="tw-flex tw-justify-center mt-5">
+      <Loading v-if="isLoading" />
+    </div>
   </div>
 </template>
