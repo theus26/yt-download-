@@ -14,12 +14,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const qualitySelected = ref<string>()
 const videoId = ref<string>('')
-const storeSearchVideo = getVideoByQuery()
 const isOpen = ref<boolean>(false)
 const step = ref<number>(1)
 const selectedVideo = ref<string | null>(null)
 const items = ['Opções de download', 'Opções de qualidade', 'Realizar download']
 const loadingButton = ref<boolean>(false)
+const storeSearchVideo = getVideoByQuery()
 
 const getVideos = () => {
   storeSearchVideo.fetchData(props.query, props.count)
@@ -40,16 +40,13 @@ const download = (id: string) => {
   videoId.value = id
   isOpen.value = true
   getInfo(id)
-  console.log(`Download iniciado para o vídeo: ${id}`)
 }
 
 const donwloadStream = () => {
   loadingButton.value = true
-  console.log('id', videoId.value)
-  console.log('qualitys', qualitySelected.value)
 }
 
-const isLoading = computed(() => {
+const loading = computed(() => {
   return storeSearchVideo.loading
 })
 
@@ -83,7 +80,7 @@ const iconAudio = ref(
 <template>
   <div class="tw-container tw-mx-auto">
     <div
-      v-if="!isLoading"
+      v-if="!loading"
       class="tw-grid tw-grid-cols-5 tw-gap-y-4 tw-p-2 tw-ml-4 sm:tw-p-6 lg:tw-p-8 tw-gap-x-2 lg:tw-gap-x-4 tw--mx-1 lg:tw--mx-2"
     >
       <div
@@ -177,7 +174,7 @@ const iconAudio = ref(
       </v-stepper>
     </Modal>
     <div class="tw-flex tw-justify-center mt-5">
-      <Loading v-if="isLoading" />
+      <Loading v-if="loading" />
     </div>
   </div>
 </template>
