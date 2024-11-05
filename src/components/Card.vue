@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
   count: 30
 })
 
-const qualitySelected = ref<string>()
+const qualitySelected = ref<string | null>()
 const videoId = ref<string>('')
 const isOpen = ref<boolean>(false)
 const step = ref<number>(1)
@@ -30,11 +30,23 @@ const getInfo = (id: string) => {
 const close = () => {
   loadingButton.value = false
   isOpen.value = false
+  qualitySelected.value = null
   selectedVideo.value = ''
   step.value = 1
 }
 const selectButton = (button: string) => {
   selectedVideo.value = button
+}
+
+const nextStep = () => {
+  if (step.value < items.length) {
+    step.value += 1
+  }
+}
+const previousStep = () => {
+  if (step.value > 1) {
+    step.value -= 1
+  }
 }
 const download = (id: string) => {
   videoId.value = id
@@ -78,17 +90,18 @@ const iconAudio = ref(
 </script>
 
 <template>
-  <div class="tw-container tw-mx-auto">
+  <div class="tw-flex tw-justify-center">
     <div
       v-if="!loading"
-      class="tw-grid tw-grid-cols-5 tw-gap-y-4 tw-p-2 tw-ml-4 sm:tw-p-6 lg:tw-p-8 tw-gap-x-2 lg:tw-gap-x-4 tw--mx-1 lg:tw--mx-2"
+      class="tw-flex tw-flex-wrap tw-gap-4 tw-p-2 tw-ml-4 sm:tw-p-6 lg:tw-p-8 tw--mx-1 lg:tw--mx-2"
+      style="overflow-x: hidden; max-width: 100%"
     >
       <div
         v-for="(video, index) in videos"
         :key="index"
-        class="tw-bg-zinc-800 tw-rounded-[30px] tw-relative tw-w-[250px] tw-h-[240px] tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-scale-105 hover:tw-shadow-xl"
+        class="tw-bg-zinc-800 tw-rounded-[30px] tw-relative tw-w-full sm:tw-w-[calc(50%-1rem)] md:tw-w-[calc(33.33%-1rem)] lg:tw-w-[calc(25%-1rem)] xl:tw-w-[calc(20%-1rem)] 2xl:tw-w-[calc(16.66%-1rem)] tw-h-[240px] tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-scale-105 hover:tw-shadow-xl"
       >
-        <div class="tw-relative tw-h-[60%] tw-flex tw-justify-center tw-items-center tw-mt-2">
+        <div class="tw-relative tw-h-[55%] tw-flex tw-justify-center tw-items-center tw-mt-2">
           <img :src="video.thumbnail" :alt="video.title" width="230" class="tw-rounded-[15px]" />
           <div
             class="tw-absolute tw-right-4 tw-bottom-2 tw-bg-black/50 tw-px-2 tw-py-1 tw-text-white tw-text-xs tw-rounded"
@@ -113,7 +126,7 @@ const iconAudio = ref(
     </div>
 
     <Modal :isOpen="isOpen" @close="close">
-      <v-stepper v-model="step" :items="items" show-actions flat>
+      <v-stepper v-model="step" :items="items" flat>
         <template v-slot:item.1>
           <div class="tw-flex tw-justify-around">
             <button
