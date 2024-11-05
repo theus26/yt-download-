@@ -6,9 +6,7 @@ import { ref } from 'vue'
 const searchQuery = ref('')
 
 const getQuery = (query: string) => {
-  console.log('query', query)
   searchQuery.value = query
-  console.log('searcQuery', searchQuery.value)
 }
 </script>
 
