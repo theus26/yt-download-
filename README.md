@@ -1,46 +1,45 @@
-# yt-download
+# Sistema da Dowloads de video do youTube
 
-This template should help get you started developing with Vue 3 in Vite.
+Esta é uma aplicação front-end desenvolvida em Vue 3 com Tailwind que permite ao usuario baixar um video especifico pela sua URL, está aplicação disponibiliza ao usuario em questão duas opções de dowloads, 'AUDIO' e 'VIDEO', com diversas opções para o tipo de dowload e a resolução desejada.
 
-## Recommended IDE Setup
+## Tecnologias utilizadas
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Vue 3
+- Typescript
+- Vuetify
+- Tailwind
+- API (YtMadDowlods) Consumindo o YouTube
 
-## Type Support for `.vue` Imports in TS
+## Funcionalidades
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- Dowloads de Video e Audio apartir do link do YouTube
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Pré-requisitos
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Certifique-se de ter o Node.js instalado em seu sistema antes de executar a aplicação.
 
-## Customize configuration
+## Configuração
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+1. Faça o clone deste repositório para o seu ambiente local.
+2. Navegue até o diretório raiz do projeto.
+3. Execute o seguinte comando para instalar as dependências:
 
-## Project Setup
 
-```sh
+1. Clone o repositório:
+
+```
+git clone https://github.com/theus26/Barbearia-FrontEnd
+```
+
+2. Acesse o diretório do projeto:
+
+```
+cd seu-repositorio
+```
+
+4. Execute os seguintes comandos para restaurar as dependências e iniciar a API:
+
+```
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+npm run serve
 ```
